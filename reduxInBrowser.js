@@ -1,33 +1,17 @@
 const store = Redux.createStore(reducer);
 
-const increment = {
-    type: 'INCREMENT'
-};
-
-const decrement = {
-    type: 'DECREMENT'
-};
-
-const doIncrment = (payload) => ({
-    type: 'INCREMENT_VALUE',
-    payload,
-});
-
 function reducer(state = { countValue: 0 }, action) {
     switch (action.type) {
         case 'INCREMENT':
             return {
+                ...state,
                 countValue: state.countValue + 1,
             };
 
         case 'DECREMENT':
             return {
+                ...state,
                 countValue: state.countValue - 1,
-            };
-
-        case 'INCREMENT_VALUE':
-            return {
-                countValue: state.countValue + action.payload,
             };
 
         default:
@@ -37,19 +21,10 @@ function reducer(state = { countValue: 0 }, action) {
 }
 
 document.getElementById('increment')
-    .addEventListener('click', () => store.dispatch(increment));
+    .addEventListener('click', () => store.dispatch({ type: 'INCREMENT' }));
 
 document.getElementById('decrement')
-    .addEventListener('click', () => store.dispatch(decrement));
-
-
-document.getElementById('inputIncrement')
-    .addEventListener('click', () => {
-        const inputValue = document.getElementById('input').value;
-        store.dispatch(doIncrment(Number(inputValue)))
-    });
-
-
+    .addEventListener('click', () => store.dispatch({ type: 'DECREMENT' }));
 
 const callBackFunc = () => {
     const state = store.getState();
